@@ -1,25 +1,34 @@
-import React, {Component } from 'react';
-import Welcome from './components/Welcome';
-import Support from './components/Support';
+import React, { Component, useState } from 'react';
 import ListCast from './components/ListCast';
 
 function App() {
   const name = 'StarGazers'
+  let [memberInfo, setMemberInfor] = useState(null);
   return (
     <div className="container">
-      <article>
-        <hgroup>
-          <img src="images/group.svg" alt="StarGazers Group" />
-          <Welcome name="Stars"/>
-          <Welcome name="StarGazers"/>
-          <Welcome name="StarAliens"/>
-          <h1>Meet the <i style={{ color: "SteelBlue" }}>{name}</i></h1>
-          <p>Members of an <b>intergalactic alliance</b><br />
-            paving the way for peace and benevolence among all species. They are known for their enthusiasm for science, for their love of fun, and their dedication to education.</p>
-          <ListCast />
-          <Support />
-        </hgroup>
-      </article>
+      <hgroup>
+        <img src="images/group.svg" alt="StarGazers Group" />
+        <h1>Meet the Stargazers</h1>
+        <p>Members of an <b>intergalactic alliance</b><br />
+          paving the way for peace and benevolence among all species. They are known for their enthusiasm for science, for their love of fun, and their dedication to education.</p>
+        <ListCast onChoice={(info) => { setMemberInfor(info) }} />
+        {memberInfo &&
+          <article>
+            <hgroup>
+              <div style={{
+                display: "flex",
+                gap: '1rem',
+              }}>
+                <img style={{ width: '200px' }} src={`images/${memberInfo.slug}.svg`} alt={memberInfo.name} />
+                <hgroup>
+                  <h1>{memberInfo.name}</h1>
+                  <p>{memberInfo.bio}</p>
+                </hgroup>
+              </div>
+            </hgroup>
+          </article>
+        }
+      </hgroup>
     </div>
   )
 }
